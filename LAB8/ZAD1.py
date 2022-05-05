@@ -4,10 +4,7 @@ class MRTop10Salary(MRJob):
 
     def mapper(self,_,line):
         for number in line.splitlines():
-
             salary = int(float(number.split(',')[-2].replace("$","")))
-            #salary = [x for x in number]
-
             yield(salary, 1)
 
     def combiner(self, number, counts):

@@ -8,27 +8,27 @@ class MRMostUsedWord(MRJob):
 
     def steps(self):
         return [
-            MRStep(mapper=self.mapper_get_words,
-            combiner=self.combiner_count_words,
-            reducer=self.reducer_find_max_word)
+            MRStep(mapper=self.mapper_get_salary,
+            combiner=self.combiner_count_salary,
+            reducer=self.reducer_find_max_salary)#,
             #MRStep(reducer=self.reducer_find_max_word)
         ]
         
-    def mapper_get_words(self, _ , line):
+    def mapper_get_salary(self, _ , line):
         for number in line.splitlines():
             salary = int(float(number.split(',')[-2].replace("$","")))
-            #salary = [x for x in number]
             yield(salary, 1)
 
-    def combiner_count_words(self, word, counts):
-        yield None, (word, sum(counts))
+    def combiner_count_salary(self, salary, counts):
+        yield None, (salary, sum(counts))
 
-    def reducer_count_words(self, word, counts):
-        yield None, (sum(counts), word)
+    #tego nie uzywam
+    def reducer_count_salary(self, salary, counts):
+        yield None, (sum(counts), salary)
 
-    def reducer_find_max_word(self, _, counts):
+    def reducer_find_max_salary(self, _, salary):
         self.max_list = []
-        for z in counts:
+        for z in salary:
             if(len(self.max_list) < 10):
                 self.max_list.append(z)
             elif(z > min(self.max_list)):
