@@ -8,7 +8,7 @@ class MRTop10Salary(MRJob):
             yield(salary, 1)
 
     def combiner(self, number, counts):
-        yield None, (number, sum(counts))
+        yield None, (number,sum(counts))
 
     def reducer(self, _, number):
         self.max_list = []
@@ -18,6 +18,7 @@ class MRTop10Salary(MRJob):
             elif(z > min(self.max_list)):
                 self.max_list.remove(min(self.max_list))
                 self.max_list.append(z)
+        self.max_list.sort()
         for i in range(10):
             yield self.max_list[i]
         

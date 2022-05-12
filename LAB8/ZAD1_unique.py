@@ -10,8 +10,8 @@ class MRMostUsedWord(MRJob):
         return [
             MRStep(mapper=self.mapper_get_salary,
             combiner=self.combiner_count_salary,
-            reducer=self.reducer_find_max_salary)#,
-            #MRStep(reducer=self.reducer_find_max_word)
+            reducer=self.reducer_count_salary),
+            MRStep(reducer=self.reducer_find_max_salary)
         ]
         
     def mapper_get_salary(self, _ , line):
@@ -20,11 +20,11 @@ class MRMostUsedWord(MRJob):
             yield(salary, 1)
 
     def combiner_count_salary(self, salary, counts):
-        yield None, (salary, sum(counts))
+        yield (salary, sum(counts))
 
-    #tego nie uzywam
+    
     def reducer_count_salary(self, salary, counts):
-        yield None, (sum(counts), salary)
+        yield None, (salary, sum(counts))
 
     def reducer_find_max_salary(self, _, salary):
         self.max_list = []
@@ -34,6 +34,7 @@ class MRMostUsedWord(MRJob):
             elif(z > min(self.max_list)):
                 self.max_list.remove(min(self.max_list))
                 self.max_list.append(z)
+        self.max_list.sort()
         for i in range(10):
             yield self.max_list[i]
 

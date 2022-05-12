@@ -1,0 +1,11 @@
+prism
+
+dane przesylane nie byly zaszyfrowane pomiedzy klientami
+mozliwe ze ze wzgledow finansowych
+
+google,ms, yahoo,apple 
+
+end2end - encryption
+
+zaszyfrowane dane na bazach - deszyfrowane na lokalnym kompie
+
